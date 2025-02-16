@@ -258,12 +258,129 @@ CREATE TABLE booked_seats (
 
 ### Note
 The tables will be automatically created when you run the application for the first time, but you can also create them manually using the SQL statements above.
-```
+
 
 This section provides:
 1. Clear SQL statements for each table
 2. Step-by-step instructions for pgAdmin setup
 3. Explanation of table relationships
 4. Notes about automatic table creation
+
+
+
+```markdown
+## Database Seeding
+
+### Adding Sample Movies and Seats
+You can add sample data to your database using pgAdmin's Query Tool or psql. Here's how:
+
+1. Connect to your database
+2. Run the following SQL commands:
+
+```sql
+-- Add new movies
+INSERT INTO movies (title, show_time) 
+VALUES 
+    ('The Matrix', '2024-03-25 18:00:00'),
+    ('Pulp Fiction', '2024-03-25 21:00:00'),
+    ('The Shawshank Redemption', '2024-03-26 19:00:00');
+
+-- Add seats for each movie
+INSERT INTO seats (movie_id, seat_number, is_booked)
+SELECT 
+    m.id,
+    s.seat_number,
+    FALSE
+FROM movies m
+CROSS JOIN (
+    SELECT 
+    CASE 
+        WHEN num <= 5 THEN 'A' || num
+        WHEN num <= 10 THEN 'B' || (num - 5)
+        WHEN num <= 15 THEN 'C' || (num - 10)
+        ELSE 'D' || (num - 15)
+    END as seat_number
+    FROM generate_series(1, 20) num
+) s
+WHERE m.title IN ('The Matrix', 'Pulp Fiction', 'The Shawshank Redemption');
+```
+
+### Adding Your Own Movies
+
+To add your own movies, use this template:
+```sql
+INSERT INTO movies (title, show_time) 
+VALUES 
+    ('Movie Title 1', 'YYYY-MM-DD HH:MI:SS'),
+    ('Movie Title 2', 'YYYY-MM-DD HH:MI:SS');
+
+-- Then add seats for your new movies
+INSERT INTO seats (movie_id, seat_number, is_booked)
+SELECT 
+    m.id,
+    s.seat_number,
+    FALSE
+FROM movies m
+CROSS JOIN (
+    SELECT 
+    CASE 
+        WHEN num <= 5 THEN 'A' || num
+        WHEN num <= 10 THEN 'B' || (num - 5)
+        WHEN num <= 15 THEN 'C' || (num - 10)
+        ELSE 'D' || (num - 15)
+    END as seat_number
+    FROM generate_series(1, 20) num
+) s
+WHERE m.title IN ('Movie Title 1', 'Movie Title 2');
+```
+
+### Viewing Current Data
+
+To view all movies:
+```sql
+SELECT * FROM movies ORDER BY show_time;
+```
+
+To view available seats for a specific movie:
+```sql
+SELECT s.seat_number, s.is_booked
+FROM seats s
+JOIN movies m ON s.movie_id = m.id
+WHERE m.title = 'Your Movie Title'
+ORDER BY s.seat_number;
+```
+
+To view all bookings:
+```sql
+SELECT 
+    b.id as booking_id,
+    m.title as movie,
+    b.user_name,
+    b.email,
+    array_agg(s.seat_number) as booked_seats
+FROM bookings b
+JOIN movies m ON b.movie_id = m.id
+JOIN booked_seats bs ON b.id = bs.booking_id
+JOIN seats s ON bs.seat_id = s.id
+GROUP BY b.id, m.title, b.user_name, b.email
+ORDER BY b.id;
+```
+
+### Notes
+- Make sure to update the show_time values to future dates
+- The seat generation creates 20 seats (A1-A5, B1-B5, C1-C5, D1-D5) for each movie
+- All seats are initially set as not booked (is_booked = FALSE)
+- Movie titles must be unique for the seat insertion query to work correctly
+```
+
+This section provides:
+1. Sample data insertion scripts
+2. Templates for adding custom movies
+3. Useful queries for viewing data
+4. Clear explanations of the seating system
+5. Important notes about data management
+
+Would you like me to add any other database management instructions?
+
 
 Would you like me to add any additional database-related information to the README?
