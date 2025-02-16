@@ -176,26 +176,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 For support, email [your-email@example.com] or open an issue in the repository.
-```
-
-This README.md now includes:
-1. Comprehensive installation instructions
-2. Detailed project structure
-3. Security considerations
-4. Future enhancements
-5. Contributing guidelines
-6. Support information
-7. Clear documentation of features and tech stack
-8. Proper formatting and emojis for better readability
 
 
-
-I'll add the database schema section to the README.md. Here's how to add it:
-
-```markdown
 ## Database Schema
 
 The application uses PostgreSQL with the following table structure:
+
 
 ### 1. Movies Table
 Stores available movies and their showtimes.
