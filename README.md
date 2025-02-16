@@ -21,22 +21,18 @@ A modern movie ticket booking system built with Flask and PostgreSQL. This appli
 ### Booking Details Form
 <img width="500" alt="Booking Details" src="https://github.com/user-attachments/assets/1a4f0fff-6718-4cae-b2be-88386e3022c7">
 
-### Payment Selection
+### Payment Selection & Error Handaling
 <img width="500" alt="Payment Options" src="https://github.com/user-attachments/assets/19b1c9ea-81f3-4ecd-a4e6-286298b8fc19">
 
 ### Booking Processing
 <img width="500" alt="Processing" src="https://github.com/user-attachments/assets/d9f67ba3-6523-4d74-aead-d4130e6e7ff3">
-
-### Confirmation Screen
 <img width="400" alt="Confirmation" src="https://github.com/user-attachments/assets/c9a800a7-f65d-43e6-9073-1152407f3224">
 
-### Email Notification
+### Booking Complete
 <img width="500" alt="Email" src="https://github.com/user-attachments/assets/df1b615c-29a5-4325-95bb-a8653e6c9754">
 
-### Booking Complete
+### Email Notification 
 <img width="400" alt="Complete" src="https://github.com/user-attachments/assets/29c166b0-519d-44de-96f7-bb901b2f5c17">
-## Live Demo
-
 
 
 ## Features
