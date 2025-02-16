@@ -260,13 +260,6 @@ CREATE TABLE booked_seats (
 The tables will be automatically created when you run the application for the first time, but you can also create them manually using the SQL statements above.
 
 
-This section provides:
-1. Clear SQL statements for each table
-2. Step-by-step instructions for pgAdmin setup
-3. Explanation of table relationships
-4. Notes about automatic table creation
-
-
 
 ```markdown
 ## Database Seeding
@@ -373,14 +366,4 @@ ORDER BY b.id;
 - Movie titles must be unique for the seat insertion query to work correctly
 ```
 
-This section provides:
-1. Sample data insertion scripts
-2. Templates for adding custom movies
-3. Useful queries for viewing data
-4. Clear explanations of the seating system
-5. Important notes about data management
 
-Would you like me to add any other database management instructions?
-
-
-Would you like me to add any additional database-related information to the README?
