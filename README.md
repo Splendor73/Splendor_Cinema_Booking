@@ -8,7 +8,7 @@ markdown
 A modern movie ticket booking system built with Flask and PostgreSQL. This application provides a seamless experience for booking movie tickets with an elegant dark-themed UI and real-time seat selection.
 
 ## Live Demo
-> <img width="757" alt="image" src="https://github.com/user-attachments/assets/dfbe8494-8b06-4a75-8c6b-246304c6dc68">
+>> <img width="757" alt="image" src="https://github.com/user-attachments/assets/dfbe8494-8b06-4a75-8c6b-246304c6dc68">
 <img width="1351" alt="image" src="https://github.com/user-attachments/assets/2a2582bd-d140-4a79-80f2-ef2e23f4e1f9">
 <img width="1393" alt="image" src="https://github.com/user-attachments/assets/71711220-431f-4879-9f22-1a6b81daccc8" />
 <img width="931" alt="image" src="https://github.com/user-attachments/assets/1a4f0fff-6718-4cae-b2be-88386e3022c7" />
