@@ -2,14 +2,14 @@
 
 Here's the complete README.md with all the information:
 
-```markdown
+markdown
 # Splendor Cinema Booking
 
 A modern movie ticket booking system built with Flask and PostgreSQL. This application provides a seamless experience for booking movie tickets with an elegant dark-themed UI and real-time seat selection.
 
 ## Live Demo
-(<img width="757" alt="image" src="https://github.com/user-attachments/assets/dfbe8494-8b06-4a75-8c6b-246304c6dc68" />
-<img width="1351" alt="image" src="https://github.com/user-attachments/assets/2a2582bd-d140-4a79-80f2-ef2e23f4e1f9" />
+> <img width="757" alt="image" src="https://github.com/user-attachments/assets/dfbe8494-8b06-4a75-8c6b-246304c6dc68">
+<img width="1351" alt="image" src="https://github.com/user-attachments/assets/2a2582bd-d140-4a79-80f2-ef2e23f4e1f9">
 <img width="1393" alt="image" src="https://github.com/user-attachments/assets/71711220-431f-4879-9f22-1a6b81daccc8" />
 <img width="931" alt="image" src="https://github.com/user-attachments/assets/1a4f0fff-6718-4cae-b2be-88386e3022c7" />
 <img width="897" alt="image" src="https://github.com/user-attachments/assets/19b1c9ea-81f3-4ecd-a4e6-286298b8fc19" />
@@ -20,32 +20,6 @@ A modern movie ticket booking system built with Flask and PostgreSQL. This appli
 
 ## Live Demo
 
-### Welcome Page
-![Welcome Page](https://github.com/user-attachments/assets/dfbe8494-8b06-4a75-8c6b-246304c6dc68)
-
-### Movies Selection
-![Movies Page](https://github.com/user-attachments/assets/2a2582bd-d140-4a79-80f2-ef2e23f4e1f9)
-
-### Seat Layout
-![Seat Selection](https://github.com/user-attachments/assets/71711220-431f-4879-9f22-1a6b81daccc8)
-
-### Booking Details Form
-![Booking Details](https://github.com/user-attachments/assets/1a4f0fff-6718-4cae-b2be-88386e3022c7)
-
-### Payment Selection
-![Payment Options](https://github.com/user-attachments/assets/19b1c9ea-81f3-4ecd-a4e6-286298b8fc19)
-
-### Booking Processing
-![Processing](https://github.com/user-attachments/assets/d9f67ba3-6523-4d74-aead-d4130e6e7ff3)
-
-### Confirmation Screen
-![Confirmation](https://github.com/user-attachments/assets/c9a800a7-f65d-43e6-9073-1152407f3224)
-
-### Email Notification
-![Email](https://github.com/user-attachments/assets/df1b615c-29a5-4325-95bb-a8653e6c9754)
-
-### Booking Complete
-![Complete](https://github.com/user-attachments/assets/29c166b0-519d-44de-96f7-bb901b2f5c17)
 
 
 ## Features
