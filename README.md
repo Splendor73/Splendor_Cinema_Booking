@@ -152,41 +152,6 @@ Splendor_Cinema_Booking/
     └── confirmation.html
 ```
 
-## Security Features
-- Environment variables for sensitive data
-- Secure password hashing
-- SQL injection prevention
-- CSRF protection
-- Secure session handling
-
-## Security Notes
-- ⚠️ Never commit the `.env` file to version control
-- 🔒 Keep your credentials secure
-- 🔄 Update passwords regularly
-- 🛡️ Use environment variables for all sensitive information
-
-## Contributing
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## Screenshots
-[Add your application screenshots here]
-
-## Future Enhancements
-- [ ] Multiple movie theaters support
-- [ ] Advanced seat pricing
-- [ ] User accounts and booking history
-- [ ] Mobile app integration
-- [ ] Multiple payment gateways
-
-## Known Issues
-- List any known issues or limitations here
-
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
 ## Author
 - Yashu Patel
@@ -198,10 +163,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Bootstrap
 - Font Awesome icons
 - All contributors who helped with the project
-
-## Support
-For support, email [your-email@example.com] or open an issue in the repository.
-
 
 ## Database Schema
 
