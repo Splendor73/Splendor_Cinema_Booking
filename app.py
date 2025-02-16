@@ -15,9 +15,9 @@ app.secret_key = 'splendor123'
 
 # Database connection configuration
 DB_CONFIG = {
-    'dbname': 'Db_2',
-    'user': 'yashupatel',
-    'password': 'YGPSeven3',
+    'dbname': '******',
+    'user': '*******',
+    'password': '*******',
     'host': 'localhost',
     'port': '5432'
 }
@@ -28,8 +28,8 @@ app.config.update(
     MAIL_PORT = 465,
     MAIL_USE_SSL = True,
     MAIL_USE_TLS = False,
-    MAIL_USERNAME = 'patel.yashu.1129@gmail.com',
-    MAIL_PASSWORD = 'eggv fkmx ruwa qorm'
+    MAIL_USERNAME = '*********@gmail.com',
+    MAIL_PASSWORD = '***********'
 )
 
 # Initialize Flask-Mail
