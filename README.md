@@ -1,5 +1,3 @@
-
-
 Here's the complete README.md with all the information:
 
 markdown
@@ -31,7 +29,7 @@ A modern movie ticket booking system built with Flask and PostgreSQL. This appli
 ### Booking Complete
 <img width="500" alt="Email" src="https://github.com/user-attachments/assets/df1b615c-29a5-4325-95bb-a8653e6c9754">
 
-### Email Notification 
+### Email Notification
 <img width="400" alt="Complete" src="https://github.com/user-attachments/assets/29c166b0-519d-44de-96f7-bb901b2f5c17">
 
 
@@ -110,6 +108,24 @@ app.config.update(
     MAIL_USERNAME = os.getenv('MAIL_USERNAME'),
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
 )
+```
+
+Replace the mail section with:
+```python
+        msg = Message(
+            'Movie Tickets Confirmed - Splendor Cinema',
+            sender='*******@gmail.com',
+            recipients=[booking_details['email']]
+        )
+```
+and
+```python
+        admin_msg = Message(
+            f'Booking Copy - {booking_details["movie"]}',
+            sender='*******@gmail.com',
+            recipients=['*******@gmail.com']
+        )
+
 ```
 
 ### 5. Database Setup
@@ -258,22 +274,22 @@ You can add sample data to your database using pgAdmin's Query Tool or psql. Her
 
 ```sql
 -- Add new movies
-INSERT INTO movies (title, show_time) 
-VALUES 
+INSERT INTO movies (title, show_time)
+VALUES
     ('The Matrix', '2024-03-25 18:00:00'),
     ('Pulp Fiction', '2024-03-25 21:00:00'),
     ('The Shawshank Redemption', '2024-03-26 19:00:00');
 
 -- Add seats for each movie
 INSERT INTO seats (movie_id, seat_number, is_booked)
-SELECT 
+SELECT
     m.id,
     s.seat_number,
     FALSE
 FROM movies m
 CROSS JOIN (
-    SELECT 
-    CASE 
+    SELECT
+    CASE
         WHEN num <= 5 THEN 'A' || num
         WHEN num <= 10 THEN 'B' || (num - 5)
         WHEN num <= 15 THEN 'C' || (num - 10)
@@ -288,21 +304,21 @@ WHERE m.title IN ('The Matrix', 'Pulp Fiction', 'The Shawshank Redemption');
 
 To add your own movies, use this template:
 ```sql
-INSERT INTO movies (title, show_time) 
-VALUES 
+INSERT INTO movies (title, show_time)
+VALUES
     ('Movie Title 1', 'YYYY-MM-DD HH:MI:SS'),
     ('Movie Title 2', 'YYYY-MM-DD HH:MI:SS');
 
 -- Then add seats for your new movies
 INSERT INTO seats (movie_id, seat_number, is_booked)
-SELECT 
+SELECT
     m.id,
     s.seat_number,
     FALSE
 FROM movies m
 CROSS JOIN (
-    SELECT 
-    CASE 
+    SELECT
+    CASE
         WHEN num <= 5 THEN 'A' || num
         WHEN num <= 10 THEN 'B' || (num - 5)
         WHEN num <= 15 THEN 'C' || (num - 10)
@@ -331,7 +347,7 @@ ORDER BY s.seat_number;
 
 To view all bookings:
 ```sql
-SELECT 
+SELECT
     b.id as booking_id,
     m.title as movie,
     b.user_name,
@@ -351,5 +367,3 @@ ORDER BY b.id;
 - All seats are initially set as not booked (is_booked = FALSE)
 - Movie titles must be unique for the seat insertion query to work correctly
 ```
-
-
