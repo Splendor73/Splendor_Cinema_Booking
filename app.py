@@ -42,7 +42,7 @@ def get_db_connection():
 def init_db():
     conn = get_db_connection()
     cur = conn.cursor()
-    
+
     # Create tables
     cur.execute('''
         CREATE TABLE IF NOT EXISTS movies (
@@ -50,14 +50,14 @@ def init_db():
             title VARCHAR(255) NOT NULL,
             show_time TIMESTAMP NOT NULL
         );
-        
+
         CREATE TABLE IF NOT EXISTS seats (
             id SERIAL PRIMARY KEY,
             movie_id INT REFERENCES movies(id) ON DELETE CASCADE,
             seat_number VARCHAR(5) NOT NULL,
             is_booked BOOLEAN DEFAULT FALSE
         );
-        
+
         CREATE TABLE IF NOT EXISTS bookings (
             id SERIAL PRIMARY KEY,
             movie_id INT REFERENCES movies(id) ON DELETE CASCADE,
@@ -67,14 +67,14 @@ def init_db():
             payment_mode VARCHAR(50) NOT NULL,
             booking_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
-        
+
         CREATE TABLE IF NOT EXISTS booked_seats (
             booking_id INT REFERENCES bookings(id) ON DELETE CASCADE,
             seat_id INT REFERENCES seats(id) ON DELETE CASCADE,
             PRIMARY KEY (booking_id, seat_id)
         );
     ''')
-    
+
     conn.commit()
     cur.close()
     conn.close()
@@ -88,16 +88,16 @@ def index():
 def movies():
     conn = get_db_connection()
     cur = conn.cursor()
-    
+
     # Get movies and count available seats
     cur.execute('''
         SELECT m.id, m.title, m.show_time,
-               (SELECT COUNT(*) FROM seats s 
+               (SELECT COUNT(*) FROM seats s
                 WHERE s.movie_id = m.id AND NOT s.is_booked) as available_seats
         FROM movies m;
     ''')
     movies_data = cur.fetchall()
-    
+
     # Convert to list of dictionaries for easier template access
     movies = []
     for movie in movies_data:
@@ -107,7 +107,7 @@ def movies():
             'show_time': movie[2],
             'available_seats': movie[3]
         })
-    
+
     cur.close()
     conn.close()
     return render_template('movies.html', movies=movies)
@@ -116,35 +116,35 @@ def movies():
 def seats(movie_id):
     conn = get_db_connection()
     cur = conn.cursor()
-    
+
     # Get movie information
     cur.execute('SELECT id, title, show_time FROM movies WHERE id = %s;', (movie_id,))
     movie_data = cur.fetchone()
-    
+
     # Debug print
     print(f"Movie data: {movie_data}")
-    
+
     movie = {
         'id': movie_data[0],
         'title': movie_data[1],
         'show_time': movie_data[2]
     }
-    
+
     # Get seats information with better ordering
     cur.execute('''
-        SELECT id, seat_number, is_booked 
-        FROM seats 
-        WHERE movie_id = %s 
-        ORDER BY 
+        SELECT id, seat_number, is_booked
+        FROM seats
+        WHERE movie_id = %s
+        ORDER BY
             SUBSTRING(seat_number, 1, 1),
             CAST(SUBSTRING(seat_number, 2) AS INTEGER);
     ''', (movie_id,))
-    
+
     seats_data = cur.fetchall()
-    
+
     # Debug print
     print(f"Seats data: {seats_data}")
-    
+
     seats = []
     for seat in seats_data:
         seats.append({
@@ -152,13 +152,13 @@ def seats(movie_id):
             'seat_number': seat[1],
             'is_booked': seat[2]
         })
-    
+
     cur.close()
     conn.close()
-    
+
     # Debug print
     print(f"Processed seats: {seats}")
-    
+
     return render_template('seats.html', movie=movie, seats=seats)
 
 def send_booking_confirmation(booking_details):
@@ -166,13 +166,13 @@ def send_booking_confirmation(booking_details):
     try:
         msg = Message(
             'Movie Tickets Confirmed - Splendor Cinema',
-            sender='patel.yashu.1129@gmail.com',
+            sender='*******@gmail.com',
             recipients=[booking_details['email']]
         )
-        
+
         msg.html = f"""
         <div style="font-family: 'Poppins', sans-serif; max-width: 600px; margin: 0 auto; padding: 30px; background: #ffffff; color: #333333; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-            
+
             <!-- Header Section -->
             <div style="text-align: center; margin-bottom: 30px; background: linear-gradient(135deg, #e50914, #b20710); padding: 20px; border-radius: 10px; color: white;">
                 <h1 style="font-size: 28px; margin: 0; text-transform: uppercase; letter-spacing: 2px;">
@@ -182,16 +182,16 @@ def send_booking_confirmation(booking_details):
                     Your movie experience awaits
                 </p>
             </div>
-            
+
             <!-- Main Content Box -->
             <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border: 1px solid #e9ecef;">
-                
+
                 <!-- Booking Details -->
                 <div style="margin-bottom: 25px;">
                     <h2 style="color: #e50914; font-size: 20px; margin-bottom: 20px; text-align: center; border-bottom: 2px solid #e50914; padding-bottom: 10px;">
                         Booking Details
                     </h2>
-                    
+
                     <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
                         <p style="margin: 10px 0; font-size: 15px;">
                             <strong style="color: #e50914; display: inline-block; width: 120px;">Booking ID:</strong>
@@ -211,7 +211,7 @@ def send_booking_confirmation(booking_details):
                         </p>
                     </div>
                 </div>
-                
+
                 <!-- Customer Details -->
                 <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
                     <p style="margin: 10px 0; font-size: 15px;">
@@ -232,7 +232,7 @@ def send_booking_confirmation(booking_details):
                     </p>
                 </div>
             </div>
-            
+
             <!-- Important Information -->
             <div style="margin-top: 25px; text-align: center; background: #fff4f4; padding: 20px; border-radius: 10px; border: 1px solid #ffe0e0;">
                 <h3 style="color: #e50914; margin-bottom: 15px; font-size: 18px;">
@@ -245,7 +245,7 @@ def send_booking_confirmation(booking_details):
                     🎟️ Show this email at the counter to collect your tickets
                 </p>
             </div>
-            
+
             <!-- Footer -->
             <div style="text-align: center; margin-top: 25px; padding-top: 20px; border-top: 1px solid #e9ecef;">
                 <p style="color: #e50914; font-weight: bold; margin-bottom: 5px;">
@@ -257,23 +257,23 @@ def send_booking_confirmation(booking_details):
             </div>
         </div>
         """
-        
+
         # Send the email
         mail.send(msg)
         print(f"Confirmation email sent to {booking_details['email']}")
-        
+
         # Also send a copy to admin
         admin_msg = Message(
             f'Booking Copy - {booking_details["movie"]}',
-            sender='patel.yashu.1129@gmail.com',
-            recipients=['patel.yashu.1129@gmail.com']
+            sender='*******@gmail.com',
+            recipients=['*******@gmail.com']
         )
         admin_msg.html = msg.html
         mail.send(admin_msg)
         print("Admin copy sent")
-        
+
         return True
-        
+
     except Exception as e:
         print(f"Error sending confirmation email: {str(e)}")
         return False
@@ -284,34 +284,34 @@ def details(movie_id):
         try:
             # Get selected seat numbers from query parameters
             selected_seat_numbers = request.args.getlist('selected_seats')
-            
+
             if not selected_seat_numbers:
                 flash('Please select at least one seat', 'error')
                 return redirect(url_for('seats', movie_id=movie_id))
-            
+
             conn = get_db_connection()
             cur = conn.cursor()
-            
+
             # Get movie information
             cur.execute('SELECT title, show_time FROM movies WHERE id = %s;', (movie_id,))
             movie = cur.fetchone()
-            
-            return render_template('details.html', 
+
+            return render_template('details.html',
                                  movie_id=movie_id,
                                  movie=movie,
                                  selected_seats=selected_seat_numbers)
-                                 
+
         except Exception as e:
             print(f"Error in details GET: {str(e)}")
             flash('An error occurred. Please try again.', 'error')
             return redirect(url_for('seats', movie_id=movie_id))
-            
+
         finally:
             if 'cur' in locals():
                 cur.close()
             if 'conn' in locals():
                 conn.close()
-    
+
     elif request.method == 'POST':
         conn = None
         cur = None
@@ -322,60 +322,60 @@ def details(movie_id):
             phone = request.form['phone']
             payment_mode = request.form['payment_mode']
             selected_seats = request.form.getlist('selected_seats')
-            
+
             if not selected_seats:
                 flash('Please select at least one seat.', 'error')
                 return redirect(url_for('seats', movie_id=movie_id))
-            
+
             conn = get_db_connection()
             cur = conn.cursor()
-            
+
             # Start transaction
             cur.execute('BEGIN')
-            
+
             # Get movie information
             cur.execute('SELECT title, show_time FROM movies WHERE id = %s;', (movie_id,))
             movie = cur.fetchone()
-            
+
             # Get seat IDs for the selected seat numbers
             placeholders = ','.join(['%s'] * len(selected_seats))
             cur.execute(f'''
-                SELECT id, seat_number 
-                FROM seats 
-                WHERE movie_id = %s 
+                SELECT id, seat_number
+                FROM seats
+                WHERE movie_id = %s
                 AND seat_number IN ({placeholders})
                 AND NOT is_booked
             ''', (movie_id, *selected_seats))
-            
+
             seats_data = cur.fetchall()
-            
+
             if len(seats_data) != len(selected_seats):
                 cur.execute('ROLLBACK')
                 flash('Some selected seats are no longer available', 'error')
                 return redirect(url_for('seats', movie_id=movie_id))
-            
+
             # Create booking
             cur.execute('''
                 INSERT INTO bookings (movie_id, user_name, email, phone, payment_mode)
                 VALUES (%s, %s, %s, %s, %s) RETURNING id;
             ''', (movie_id, user_name, email, phone, payment_mode))
-            
+
             booking_id = cur.fetchone()[0]
-            
+
             # Update seats and create booking-seat relationships
             for seat_data in seats_data:
                 seat_id = seat_data[0]
                 cur.execute('''
-                    UPDATE seats 
-                    SET is_booked = TRUE 
+                    UPDATE seats
+                    SET is_booked = TRUE
                     WHERE id = %s AND is_booked = FALSE
                 ''', (seat_id,))
-                
+
                 cur.execute('''
-                    INSERT INTO booked_seats (booking_id, seat_id) 
+                    INSERT INTO booked_seats (booking_id, seat_id)
                     VALUES (%s, %s)
                 ''', (booking_id, seat_id))
-            
+
             # Prepare booking details for email
             booking_details = {
                 'id': booking_id,
@@ -390,22 +390,22 @@ def details(movie_id):
 
             # Send confirmation email
             email_sent = send_booking_confirmation(booking_details)
-            
+
             if not email_sent:
                 flash('Booking confirmed but email notification failed. Please save your booking ID.', 'warning')
-            
+
             # Commit transaction
             cur.execute('COMMIT')
-            
+
             return redirect(url_for('confirmation', booking_id=booking_id))
-            
+
         except Exception as e:
             if conn and cur:
                 cur.execute('ROLLBACK')
             print(f"Error during booking: {str(e)}")
             flash('An error occurred while processing your booking. Please try again.', 'error')
             return redirect(url_for('seats', movie_id=movie_id))
-            
+
         finally:
             if cur:
                 cur.close()
@@ -417,10 +417,10 @@ def confirmation(booking_id):
     try:
         conn = get_db_connection()
         cur = conn.cursor()
-        
+
         # Get booking details with movie information and seat numbers
         cur.execute('''
-            SELECT 
+            SELECT
                 b.id,
                 m.title,
                 m.show_time,
@@ -436,9 +436,9 @@ def confirmation(booking_id):
             WHERE b.id = %s
             GROUP BY b.id, m.title, m.show_time, b.user_name, b.email, b.phone, b.payment_mode
         ''', (booking_id,))
-        
+
         booking = cur.fetchone()
-        
+
         if booking:
             booking_details = {
                 'id': booking[0],
@@ -454,12 +454,12 @@ def confirmation(booking_id):
         else:
             flash('Booking not found', 'error')
             return redirect(url_for('index'))
-            
+
     except Exception as e:
         print(f"Error in confirmation: {str(e)}")
         flash('Error retrieving booking details', 'error')
         return redirect(url_for('index'))
-        
+
     finally:
         if 'cur' in locals():
             cur.close()
@@ -468,4 +468,4 @@ def confirmation(booking_id):
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=True) 
+    app.run(debug=True)
